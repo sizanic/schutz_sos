@@ -58,6 +58,15 @@ def ReadBDD():
     conn.close()
     return render_template('read_data.html', data=data)
 
+@app.route('/livres/')
+def ReadBDD2():
+    conn = sqlite3.connect('database2.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM Livres;')
+    data = cursor.fetchall()
+    conn.close()
+    return render_template('read_data2.html', data=data)
+
 @app.route('/enregistrer_client', methods=['GET'])
 def formulaire_client():
     return render_template('formulaire.html')  # afficher le formulaire
