@@ -44,15 +44,21 @@ def FormulaireRanger():
     # Afficher la page HTML
     return render_template('form_ranger.html')
 
-@app.route('/ajputer_composant/<int:post_id>')
-def RangerComposant(post_id):
-    conn = sqlite3.connect('database.db')
+@app.route('/ajouter_composant/, methods=['POST']')
+def RangerComposant():
+
+    allee_id = request.form['allee']
+    empl_id = request.form['emplacement']
+    ref_id = request.form['reference']
+
+    conn = sqlite3.connect('schutz.db')
     cursor = conn.cursor()
-    cursor.execute('SELECT * FROM clients WHERE id = ?', (post_id,))
+    cursor.execute('insert into inventaire (REF) values(?, ?, ?)', (allee_id, empl_id, ref_id))
     data = cursor.fetchall()
     conn.close()
+    
     # Rendre le template HTML et transmettre les données
-    return render_template('read_data.html', data=data)
+    return redirect('/formulaire_ranger/')  # Rediriger vers la page d'accueil après l'enregistrement
 
 @app.route('/consultation/')
 def ReadBDD():
