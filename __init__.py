@@ -81,14 +81,14 @@ def ViderEmplacement():
     return redirect('/formulaire_vider/')  # Rediriger vers la page d'accueil après
 
 
-@app.route('/consultation/')
+@app.route('/recherche/')
 def ReadBDD():
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect('schutz.db')
     cursor = conn.cursor()
-    cursor.execute('SELECT * FROM clients;')
+    cursor.execute('SELECT ref,date FROM inventaire;')
     data = cursor.fetchall()
     conn.close()
-    return render_template('read_data.html', data=data)
+    return render_template('/formulaire_ranger/')
 
 @app.route('/livres/')
 def ReadBDD2():
