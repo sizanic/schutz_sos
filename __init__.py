@@ -39,8 +39,13 @@ def authentification():
 
     return render_template('formulaire_authentification.html', error=False)
 
-@app.route('/fiche_client/<int:post_id>')
-def Readfiche(post_id):
+@app.route('/formulaire_ranger/')
+def FormulaireRanger():
+    # Afficher la page HTML
+    return render_template('form_ranger.html')
+
+@app.route('/ajputer_composant/<int:post_id>')
+def RangerComposant(post_id):
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM clients WHERE id = ?', (post_id,))
