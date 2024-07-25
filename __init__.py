@@ -119,3 +119,82 @@ def enregistrer_client():
                                                                                                                                        
 if __name__ == "__main__":
   app.run(debug=True)
+
+
+
+
+# Nouvelles roots 
+@app.route('/formulaire_ranger/') 
+def FormulaireRanger():
+       # Afficher la page HTML 
+      return render_template('form_ranger.html')
+
+ @app.route('/ajouter_composant/', methods=['POST']) 
+def RangerComposant(): 
+      allee_id = request.form['allee'] 
+      empl_id = request.form['emplacement'] 
+      ref_id = request.form['reference'] 
+     conn = sqlite3.connect('schutz.db') 
+     cursor = conn.cursor()
+      cursor.execute('INSERT INTO inventaire (allee, emplacement, reference) VALUES (?, ?, ?)', (allee_id, empl_id, ref_id))
+      conn.commit()
+       conn.close() 
+      # Rediriger vers la page d'accueil après l'enregistrement 
+return redirect('/formulaire_ranger/') 
+
+@app.route('/formulaire_vider/')
+ def FormulaireVider(): 
+      # Afficher la page HTML pour vider un emplacement 
+     return render_template('form_vider.html')
+
+ @app.route('/vider_emplacement/', methods=['POST']) 
+def ViderEmplacement():
+      allee_id = request.form['allee'] 
+     empl_id = request.form['emplacement']
+ 
+     conn = sqlite3.connect('schutz.db') 
+     cursor = conn.cursor() 
+     cursor.execute('DELETE FROM inventaire WHERE allee = ? AND emplacement = ?', (allee_id, empl_id)) 
+     conn.commit()
+     conn.close() 
+      # Rediriger vers la page d'accueil après return redirect('/formulaire_vider/')
+
+ @app.route('/recherche/') 
+def ReadBDD():
+      conn = sqlite3.connect('schutz.db') 
+      cursor = conn.cursor() 
+      cursor.execute('SELECT reference, date FROM inventaire;')
+      data = cursor.fetchall()
+      conn.close()
+      return render_template('formulaire_ranger.html', data=data)
+
+@app.route('/allees') 
+def get_allees():
+      conn = sqlite3.connect('schutz.db')
+      cursor = conn.cursor() 
+     cursor.execute('SELECT DISTINCT allee FROM inventaire;') 
+     allees = cursor.fetchall() 
+      conn.close()
+       return jsonify(allees)
+
+ @app.route('/emplacements') 
+def get_emplacements():
+         conn = sqlite3.connect('schutz.db') 
+         cursor = conn.cursor()
+        cursor.execute('SELECT DISTINCT emplacement FROM inventaire;')
+       emplacements = cursor.fetchall() 
+       conn.close() 
+       return jsonify(emplacements) 
+
+@app.route('/recherche', methods=['GET']) 
+def search_reference(): 
+      ref_id = request.args.get('reference') 
+      conn = sqlite3.connect('schutz.db') 
+      cursor = conn.cursor() 
+      cursor.execute('SELECT * FROM inventaire WHERE  reference = ?', (ref_id,)) 
+      result = cursor.fetchall() 
+      conn.close()
+       return jsonify(result)
+ if __name__ == "__main__":
+        app.run(debug=True)
+
