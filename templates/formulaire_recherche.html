@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rechercher Référence</title>
+</head>
+<body>
+    <h1>Rechercher une Référence</h1>
+    <form action="/recherche" method="get">
+        <label for="reference">Référence:</label>
+        <input type="text" id="reference" name="reference" required>
+        <button type="submit">Rechercher</button>
+    </form>
+
+    {% if data %}
+    <h2>Résultats de la Recherche</h2>
+    <ul>
+        {% for item in data %}
+        <li>Allee: {{ item[0] }}, Emplacement: {{ item[1] }}, Référence: {{ item[2] }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</body>
+</html>
