@@ -59,12 +59,13 @@ def RangerComposant():
     
     # Rendre le template HTML et transmettre les données
     return redirect('/formulaire_ranger/')  # Rediriger vers la page d'accueil après l'enregistrement
+
 @app.route('/formulaire_vider/')
 def FormulaireVider():
     # Afficher la page HTML pour vider un emplacement
     return render_template('form_vider.html')
 	
-@app.route('/vider_emplacement'/, methods=['POST'])
+@app.route('/vider_emplacement/, methods=['POST']')
 def ViderEmplacement():
 
     allee_id = request.form['allee']
@@ -72,7 +73,7 @@ def ViderEmplacement():
     
    conn = sqlite3.connect('schutz.db')
     cursor = conn.cursor()
-    cursor.execute('DELETE FROM emplacements WHERE allee_id = A AND emplacement_id = 103', (allee_id, empl_id))
+    cursor.execute('DELETE FROM emplacements WHERE allee_id = 'A' AND emplacement_id = 103, (allee_id, empl_id))
     data = cursor.fetchall()
     conn.close()
     
