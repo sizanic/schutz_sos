@@ -124,35 +124,5 @@ if __name__ == "__main__":
 
 
 
-# Nouvelles roots 
 
-@app.route('/allees') 
-def get_allees():
-      conn = sqlite3.connect('schutz.db')
-      cursor = conn.cursor() 
-     cursor.execute('SELECT DISTINCT allee FROM inventaire;') 
-     allees = cursor.fetchall() 
-      conn.close()
-       return jsonify(allees)
-
- @app.route('/emplacements') 
-def get_emplacements():
-         conn = sqlite3.connect('schutz.db') 
-         cursor = conn.cursor()
-        cursor.execute('SELECT DISTINCT emplacement FROM inventaire;')
-       emplacements = cursor.fetchall() 
-       conn.close() 
-       return jsonify(emplacements) 
-
-@app.route('/recherche', methods=['GET']) 
-def search_reference(): 
-      ref_id = request.args.get('reference') 
-      conn = sqlite3.connect('schutz.db') 
-      cursor = conn.cursor() 
-      cursor.execute('SELECT * FROM inventaire WHERE  reference = ?', (ref_id,)) 
-      result = cursor.fetchall() 
-      conn.close()
-       return jsonify(result)
- if __name__ == "__main__":
-        app.run(debug=True)
 
