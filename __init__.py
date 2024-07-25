@@ -22,7 +22,7 @@ def lecture():
         # Rediriger vers la page d'authentification si l'utilisateur n'est pas authentifié
         return redirect(url_for('authentification'))
 
-  # Si l'utilisateur est authentifié
+    # Si l'utilisateur est authentifié
     return "<h2>Bravo, vous êtes authentifié</h2>"
 
 @app.route('/authentification', methods=['GET', 'POST'])
@@ -38,6 +38,11 @@ def authentification():
             return render_template('formulaire_authentification.html', error=True)
 
     return render_template('formulaire_authentification.html', error=False)
+
+@app.route('/formulaire_ranger/')
+def FormulaireRanger():
+    # Afficher la page HTML
+    return render_template('form_ranger.html')
 
 @app.route('/ajouter_composant', methods=['POST'])
 def RangerComposant():
@@ -59,11 +64,6 @@ def RangerComposant():
 def FormulaireVider():
     # Afficher la page HTML pour vider un emplacement
     return render_template('form_vider.html')
-	
-@app.route('/formulaire_vider/')
-def FormulaireVider():
-    # Afficher la page HTML pour vider un emplacement
-    return render_template('form_vider.html')
 
 @app.route('/vider_emplacement', methods=['POST'])
 def ViderEmplacement():
@@ -79,7 +79,6 @@ def ViderEmplacement():
     # Rediriger vers la page d'accueil après l'opération
     return redirect('/formulaire_vider/')
 
-
 @app.route('/recherche/', methods=['GET', 'POST'])
 def ReadBDD():
     if request.method == 'POST':
@@ -92,33 +91,5 @@ def ReadBDD():
         return render_template('resultats_recherche.html', data=data)
     return render_template('form_recherche.html')
 
-
-
-
-@app.route('/enregistrer_client', methods=['GET'])
-def formulaire_client():
-    return render_template('formulaire.html')  # afficher le formulaire
-
-@app.route('/enregistrer_client', methods=['POST'])
-def enregistrer_client():
-    nom = request.form['nom']
-    prenom = request.form['prenom']
-
-    # Connexion à la base de données
-    conn = sqlite3.connect('database.db')
-    cursor = conn.cursor()
-
-    # Exécution de la requête SQL pour insérer un nouveau client
-    cursor.execute('INSERT INTO clients (created, nom, prenom, adresse) VALUES (?, ?, ?, ?)', (1002938, nom, prenom, "ICI"))
-    conn.commit()
-    conn.close()
-    return redirect('/consultation/')  # Rediriger vers la page d'accueil après l'enregistrement
-                                                                                                                                       
 if __name__ == "__main__":
-  app.run(debug=True)
-
-
-
-
-
-
+    app.run(debug=True)
