@@ -70,7 +70,6 @@ def ViderEmplacement():
     allee_id = request.form['allee']
     empl_id = request.form['emplacement']
     
-
    conn = sqlite3.connect('schutz.db')
     cursor = conn.cursor()
     cursor.execute('DELETE FROM emplacements WHERE allee_id = A AND emplacement_id = 103', (allee_id, empl_id))
