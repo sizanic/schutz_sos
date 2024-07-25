@@ -39,65 +39,61 @@ def authentification():
 
     return render_template('formulaire_authentification.html', error=False)
 
-@app.route('/formulaire_ranger/')
-def FormulaireRanger():
-    # Afficher la page HTML
-    return render_template('form_ranger.html')
-
-@app.route('/ajouter_composant/, methods=['POST']') 
+@app.route('/ajouter_composant', methods=['POST'])
 def RangerComposant():
-
     allee_id = request.form['allee']
-    empl_id = request.form['emplacement']
-    ref_id = request.form['reference']
+    id = request.form['emplacement']
+    ref = request.form['reference']
+    date = request.form['date']
 
     conn = sqlite3.connect('schutz.db')
     cursor = conn.cursor()
-    cursor.execute('insert into inventaire (REF) values(?, ?, ?)', (allee_id, empl_id, ref_id))
-    data = cursor.fetchall()
+    cursor.execute('INSERT INTO inventaire (REF, Date, ALLEE_ID, ID) VALUES (?, ?, ?, ?)', (ref, date, allee_id, id))
+    conn.commit()
     conn.close()
     
-    # Rendre le template HTML et transmettre les données
-    return redirect('/formulaire_ranger/')  # Rediriger vers la page d'accueil après l'enregistrement
+    # Rediriger vers la page d'accueil après l'enregistrement
+    return redirect('/formulaire_ranger/')
 
 @app.route('/formulaire_vider/')
 def FormulaireVider():
     # Afficher la page HTML pour vider un emplacement
     return render_template('form_vider.html')
 	
-@app.route('/vider_emplacement/, methods=['POST']')
+@app.route('/formulaire_vider/')
+def FormulaireVider():
+    # Afficher la page HTML pour vider un emplacement
+    return render_template('form_vider.html')
+
+@app.route('/vider_emplacement', methods=['POST'])
 def ViderEmplacement():
-
     allee_id = request.form['allee']
-    empl_id = request.form['emplacement']
-    
-   conn = sqlite3.connect('schutz.db')
-    cursor = conn.cursor()
-    cursor.execute('DELETE FROM emplacements WHERE allee_id = 'A' AND emplacement_id = 103, (allee_id, empl_id))
-    data = cursor.fetchall()
-    conn.close()
-    
-    # Rendre le template HTML et transmettre les données
-    return redirect('/formulaire_vider/')  # Rediriger vers la page d'accueil après
+    id = request.form['emplacement']
 
-
-@app.route('/recherche/')
-def ReadBDD():
     conn = sqlite3.connect('schutz.db')
     cursor = conn.cursor()
-    cursor.execute('SELECT ref,date FROM inventaire;')
-    data = cursor.fetchall()
+    cursor.execute('DELETE FROM inventaire WHERE ALLEE_ID = ? AND ID = ?', (allee_id, id))
+    conn.commit()
     conn.close()
-    return render_template('/formulaire_ranger/')
+    
+    # Rediriger vers la page d'accueil après l'opération
+    return redirect('/formulaire_vider/')
 
-@app.route('/livres/')
-def ReadBDD2():
-    conn = sqlite3.connect('database2.db')
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM Livres;')
-    data = cursor.fetchall()
-    conn.close()
-    return render_template('read_data2.html', data=data)
+
+@app.route('/recherche/', methods=['GET', 'POST'])
+def ReadBDD():
+    if request.method == 'POST':
+        ref = request.form['reference']
+        conn = sqlite3.connect('schutz.db')
+        cursor = conn.cursor()
+        cursor.execute('SELECT REF, Date, ALLEE_ID, ID FROM inventaire WHERE REF = ?', (ref,))
+        data = cursor.fetchall()
+        conn.close()
+        return render_template('resultats_recherche.html', data=data)
+    return render_template('form_recherche.html')
+
+
+
 
 @app.route('/enregistrer_client', methods=['GET'])
 def formulaire_client():
