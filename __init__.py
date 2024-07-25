@@ -44,7 +44,7 @@ def FormulaireRanger():
     # Afficher la page HTML
     return render_template('form_ranger.html')
 
-@app.route('/ajouter_composant/, methods=['POST']')
+@app.route('/ajouter_composant/, methods=['POST']') 
 def RangerComposant():
 
     allee_id = request.form['allee']
