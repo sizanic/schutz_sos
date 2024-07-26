@@ -39,7 +39,7 @@ def authentification():
 
     return render_template('formulaire_authentification.html', error=False)
 
-@app.route('/formulaire_ranger/')
+@app.route('/formulaire_ranger')
 def FormulaireRanger():
     # Afficher la page HTML
     return render_template('form_ranger.html')
@@ -58,9 +58,9 @@ def RangerComposant():
     conn.close()
     
     # Rediriger vers la page d'accueil après l'enregistrement
-    return redirect('/formulaire_ranger/')
+    return redirect('/formulaire_ranger')
 
-@app.route('/formulaire_vider/')
+@app.route('/formulaire_vider')
 def FormulaireVider():
     # Afficher la page HTML pour vider un emplacement
     return render_template('form_vider.html')
@@ -77,9 +77,9 @@ def ViderEmplacement():
     conn.close()
     
     # Rediriger vers la page d'accueil après l'opération
-    return redirect('/formulaire_vider/')
+    return redirect('/formulaire_vider')
 
-@app.route('/recherche/', methods=['GET', 'POST'])
+@app.route('/recherche', methods=['GET', 'POST'])
 def ReadBDD():
     if request.method == 'POST':
         ref = request.form['reference']
