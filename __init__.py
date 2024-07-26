@@ -85,10 +85,10 @@ def ReadBDD():
         ref = request.form['reference']
         conn = sqlite3.connect('schutz.db')
         cursor = conn.cursor()
-        cursor.execute('SELECT REF, Date, ALLEE_ID, ID FROM inventaire WHERE REF = ?', (ref,))
+        cursor.execute('SELECT REF, Date, ALLEE_ID, ID FROM inventaire WHERE REF = ?', (ref))
         data = cursor.fetchall()
         conn.close()
-        return render_template('resultats_recherche.html', data=data)
+       # return render_template('resultats_recherche.html', data=data)
     return render_template('form_recherche.html')
 
 if __name__ == "__main__":
