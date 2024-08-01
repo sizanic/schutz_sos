@@ -22,16 +22,16 @@
 create table EMPLACEMENTS (
      ALLEE_ID char(1) not null,
      ID int not null,
-     constraint ID_EMPLACEMENTS_ID primary key (ALLEE_ID, ID));
+     ID_EMPLACEMENTS_ID primary key (ALLEE_ID, ID));
 
 create table INVENTAIRE (
      REF varchar(50) not null,
      Date date not null,
      ALLEE_ID char(1) not null,
      ID int not null,
-     constraint ID_INVENTAIRE_ID primary key (REF),
-     constraint SID_INVENTAIRE_ID unique (Date),
-     constraint FKALLEE_ID unique (ALLEE_ID, ID));
+     ID_INVENTAIRE_ID primary key (REF),
+     SID_INVENTAIRE_ID unique (Date),
+     FKALLEE_ID unique (ALLEE_ID, ID));
 
 
 -- Constraints Section
