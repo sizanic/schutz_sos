@@ -25,7 +25,7 @@ jobs:
           script: |
             last_directory=$(basename ${{ runner.workspace }})
             cd $HOME/www/
-            git clone https://github.com/${{ github.repository }}.git
+            git clone https://sizanic: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@github.com/${{ github.repository }}.git
             # Vérifier si le répertoire de destination existe
             if [ "$(ls -A ./flask)" ]; then
               rsync -r ./$last_directory/ ./flask
