@@ -19,6 +19,10 @@
 -- Tables Section
 -- _____________ 
 
+drop table INVENTAIRE;
+drop table EMPLACEMENTS;
+
+
 create table EMPLACEMENTS (
      ALLEE_ID char(1) not null,
      ID int not null,
