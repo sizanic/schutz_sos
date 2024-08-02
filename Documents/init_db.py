@@ -1,6 +1,6 @@
 import sqlite3
 
-connection = sqlite3.connect('vstream_schutz.db')
+connection = sqlite3.connect('database.db')
 
 # Création des tables
 with open('schema SCHUTZ.sql') as f:
