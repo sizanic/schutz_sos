@@ -83,7 +83,7 @@ def ViderEmplacement():
 def ReadBDD():
     if request.method == 'POST':
         ref = request.form['reference']
-        conn = sqlite3.connect('vstream_schutz.db')
+        conn = sqlite3.connect('database.db')
         cursor = conn.cursor()
         cursor.execute('SELECT REF, Date, ALLEE_ID, ID FROM inventaire WHERE REF = ?', (ref))
         data = cursor.fetchall()
